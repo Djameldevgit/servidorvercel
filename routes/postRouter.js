@@ -1,9 +1,19 @@
 const router = require('express').Router()
-const postCtrl = require('../controllers/postCtrl')
+const postCtrl = require('../controllers/postCtrl');
+const provaCtrl = require('../controllers/provaCtrl.');
 const auth = require('../middleware/auth')
 
+router.post('/crearpostpendiente', auth, postCtrl.createPostPendiente);
+router.get('/countpostspendientes', auth, postCtrl.countPostsPendientes)
+router.get('/countposts', auth, postCtrl.countPosts)
+router.get('/getpostspendientes', auth, postCtrl.getPostsPendientesss);
+
+
+router.get('/user/:id/count-posts', auth, postCtrl.counTotalPostsUserCtrl);
+
+router.patch('/aprovarpost/:id/aprovado', auth, postCtrl.aprovarPostPendiente);
 router.route('/posts')
-    .post(auth, postCtrl.createPost)
+
     .get(auth, postCtrl.getPosts)
 
 router.route('/post/:id')
@@ -24,6 +34,6 @@ router.patch('/savePost/:id', auth, postCtrl.savePost)
 router.patch('/unSavePost/:id', auth, postCtrl.unSavePost)
 
 router.get('/getSavePosts', auth, postCtrl.getSavePosts)
-
+router.get('/prova', auth, provaCtrl.creatProva)
 
 module.exports = router

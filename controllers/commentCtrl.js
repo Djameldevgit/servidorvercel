@@ -7,11 +7,11 @@ const commentCtrl = {
         try {
             const { postId, content, tag, reply, postUserId } = req.body
 
-            const post = await Posts.findById(postId)
+            const post = await Posts.findById(postId)//Verificación de existencia del post:
             if(!post) return res.status(400).json({msg: "This post does not exist."})
-
-            if(reply){
-                const cm = await Comments.findById(reply)
+          
+            if(reply){//  está verificando si el comentario que se está creando es una respuesta a otro comentario existente.
+                const cm = await Comments.findById(reply)//si hay un  reply se busca el reply en la coleccion comment
                 if(!cm) return res.status(400).json({msg: "This comment does not exist."})
             }
 

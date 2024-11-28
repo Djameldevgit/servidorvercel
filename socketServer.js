@@ -85,7 +85,10 @@ const SocketServer = (socket) => {
             })
         }
     })
-
+    socket.on('block', newUser => {
+        const user = users.find(user => user.id === newUser._id)
+        user && socket.to(`${user.socketId}`).emit('blockToClient', newUser)
+    })
 
     // Follow
     socket.on('follow', newUser => {

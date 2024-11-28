@@ -33,6 +33,19 @@ app.use('/api', require('./routes/postRouter'))
 app.use('/api', require('./routes/commentRouter'))
 app.use('/api', require('./routes/notifyRouter'))
 app.use('/api', require('./routes/messageRouter'))
+app.use('/api', require('./routes/adminUserRouter'))
+app.use('/api', require('./routes/denunciaUserRouter'))
+app.use('/api', require('./routes/provaRouter'))
+/*  
+mongoose.connect('mongodb://127.0.0.1:27017/djam', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true, 
+    useFindAndModify: false,
+  })
+  .then(() => console.log('Conectado a MongoDB'))
+  .catch((err) => console.error('Error de conexión a MongoDB', err));
+*/
 
 
 const URI = process.env.MONGODB_URL
@@ -46,12 +59,12 @@ mongoose.connect(URI, {
     console.log('Connected to mongodb')
 })
 
-if(process.env.NODE_ENV === 'production'){
-    app.use(express.static('client/build'))
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
-    })
-}
+app.use(express.static(path.join(__dirname, 'client/public')));
+
+// Ruta comodín para enviar "index.html" en cualquier solicitud
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'public', 'index.html'));
+});
 
 
 const port = process.env.PORT || 5000
